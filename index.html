@@ -10,28 +10,105 @@
   <div class="container">
     <header class="header">
       <h1>Alfabetização Brasil X Estados Unidos</h1>
-      <small>Dois países, duas realidades, um só problema</small>
+      <small>Comparando alfabetização e proficiência em dois continentes</small>
     </header>
 
     <section class="card full">
-      <div class="flags">
-        <a class="flag-btn" href="./brasil.html" aria-label="Brasil">
-          <img class="flag-img" src="./assets/Flag_of_Brazil.svg" alt="Bandeira do Brasil" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-          <div style="display:none; font-size:4rem">🇧🇷</div>
-          <div class="flag-label">Brasil</div>
+      <p class="intro-text" style="text-align: center; margin-bottom: 30px; font-size: 1.1rem; color: #666;">
+        Escolha um país para explorar os dados de alfabetização e proficiência por estado:
+      </p>
+      
+      <div class="country-cards">
+        <!-- Card Brasil -->
+        <a class="country-card" href="./brasil.html" aria-label="Explorar Brasil">
+          <div class="country-card-flag">
+            <img src="./assets/Flag_of_Brazil.svg" alt="Bandeira do Brasil" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+            <div style="display:none; font-size:4rem">🇧🇷</div>
+          </div>
+          <h2 class="country-card-title">🇧🇷 Brasil</h2>
+          
+          <div class="country-stats">
+            <div class="stat-item">
+              <span class="stat-value">93,0%</span>
+              <span class="stat-label">Taxa de Alfabetização (15+)</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">215M</span>
+              <span class="stat-label">População</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">0,754</span>
+              <span class="stat-label">IDH</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">R$ 1.400</span>
+              <span class="stat-label">Renda per capita</span>
+            </div>
+          </div>
+          
+          <div class="country-highlights">
+            <div class="highlight positive">
+              <strong>Maior:</strong> Distrito Federal (97,9%)
+            </div>
+            <div class="highlight negative">
+              <strong>Menor:</strong> Alagoas (84,2%)
+            </div>
+          </div>
+          
+          <div class="country-card-action">
+            <span class="btn-explore">Explorar 27 estados →</span>
+          </div>
         </a>
-        
-        <a class="flag-btn" href="./usa.html" aria-label="Estados Unidos">
-          <img class="flag-img" src="./assets/Flag_of_USA.svg" alt="Bandeira dos Estados Unidos" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
-          <div style="display:none; font-size:4rem">🇺🇸</div>
-          <div class="flag-label">Estados Unidos</div>
+
+        <!-- Card Estados Unidos -->
+        <a class="country-card" href="./usa.html" aria-label="Explorar Estados Unidos">
+          <div class="country-card-flag">
+            <img src="./assets/Flag_of_USA.svg" alt="Bandeira dos Estados Unidos" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+            <div style="display:none; font-size:4rem">🇺🇸</div>
+          </div>
+          <h2 class="country-card-title">🇺🇸 Estados Unidos</h2>
+          
+          <div class="country-stats">
+            <div class="stat-item">
+              <span class="stat-value">46,9%</span>
+              <span class="stat-label">Taxa de Proficiência (16-74)</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">333M</span>
+              <span class="stat-label">População</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">0,920</span>
+              <span class="stat-label">IDH</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">US$ 6.500</span>
+              <span class="stat-label">Renda per capita</span>
+            </div>
+          </div>
+          
+          <div class="country-highlights">
+            <div class="highlight positive">
+              <strong>Maior:</strong> Minnesota (57%)
+            </div>
+            <div class="highlight negative">
+              <strong>Menor:</strong> Louisiana/Mississippi (35%)
+            </div>
+          </div>
+          
+          <div class="country-card-action">
+            <span class="btn-explore">Explorar 51 estados →</span>
+          </div>
         </a>
       </div>
-      <p class="notice" style="margin-top:14px">Dica: toque na bandeira (ou pressione <span class="kbd">Enter</span>) para abrir.</p>
+      
+      <p class="notice footer-hint" style="margin-top: 30px; text-align: center;">
+        💡 Clique em um card para visualizar o mapa interativo
+      </p>
     </section>
 
   </div>
-  <script src="./js/app.js"></script>
+  <script src="./js/app.js?v=20250103-006"></script>
   <script>window._amostra.bindFlagLinks();</script>
 </body>
 </html>

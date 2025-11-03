@@ -12,7 +12,12 @@
   <div class="container">
     <header class="header">
       <a href="./index.html" class="back-link">&larr; Voltar</a>
-      <h1>Brasil</h1>
+      <h1>
+        Brasil
+        <button id="country-info-btn" class="country-info-btn" title="Informações do País">
+          ℹ️ Info
+        </button>
+      </h1>
       <small>Clique nos estados para ver mais informações</small>
     </header>
 
@@ -277,6 +282,61 @@
         
         console.log('✓ Controles de zoom habilitados no Brasil');
       }, 150);
+      
+      // Botão de informações do país
+      const countryInfoBtn = document.getElementById('country-info-btn');
+      if (countryInfoBtn) {
+        countryInfoBtn.addEventListener('click', () => {
+          const html = `
+            <div class="alfabetizacao-destaque">
+              <div class="taxa-principal">93,0%</div>
+              <div class="taxa-label">Taxa de Alfabetização Nacional (15+)</div>
+            </div>
+            
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-icon">👥</span>
+                <span class="info-label">População</span>
+                <span class="info-value">215 milhões</span>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">💰</span>
+                <span class="info-label">Renda per capita</span>
+                <span class="info-value">R$ 1.400</span>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">📊</span>
+                <span class="info-label">IDH (2021)</span>
+                <span class="info-value">0,754 (Alto)</span>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">📈</span>
+                <span class="info-label">Evolução 2010-2022</span>
+                <span class="info-value">+6,2 p.p.</span>
+              </div>
+            </div>
+            
+            <div class="comparativo-nacional">
+              <div class="comparativo-label">Estados e DF</div>
+              <div style="display: flex; gap: 20px; justify-content: center; margin-top: 10px;">
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: bold; color: #4CAF50;">27</div>
+                  <div style="font-size: 0.9rem; color: #666;">Total</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: bold; color: #4CAF50;">DF 97,9%</div>
+                  <div style="font-size: 0.9rem; color: #666;">Maior taxa</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: bold; color: #FF9800;">AL 84,2%</div>
+                  <div style="font-size: 0.9rem; color: #666;">Menor taxa</div>
+                </div>
+              </div>
+            </div>
+          `;
+          window._amostra.Modal.show('🇧🇷 Visão Geral do Brasil', html);
+        });
+      }
     })();
   </script>
 </body>

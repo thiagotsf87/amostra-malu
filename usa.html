@@ -12,7 +12,12 @@
   <div class="container">
     <header class="header">
       <a href="./index.html" class="back-link">&larr; Voltar</a>
-      <h1>Estados Unidos</h1>
+      <h1>
+        Estados Unidos
+        <button id="country-info-btn" class="country-info-btn" title="Informações do País">
+          ℹ️ Info
+        </button>
+      </h1>
       <small>Clique nos estados para ver mais informações</small>
     </header>
 
@@ -248,6 +253,61 @@
         
         console.log('✓ Controles de zoom habilitados');
       }, 150);
+      
+      // Botão de informações do país
+      const countryInfoBtn = document.getElementById('country-info-btn');
+      if (countryInfoBtn) {
+        countryInfoBtn.addEventListener('click', () => {
+          const html = `
+            <div class="alfabetizacao-destaque">
+              <div class="taxa-principal">46,9%</div>
+              <div class="taxa-label">Taxa de Proficiência Nacional (16-74)</div>
+            </div>
+            
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-icon">👥</span>
+                <span class="info-label">População</span>
+                <span class="info-value">333 milhões</span>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">💰</span>
+                <span class="info-label">Renda per capita</span>
+                <span class="info-value">US$ 6.500</span>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">📊</span>
+                <span class="info-label">IDH (2023)</span>
+                <span class="info-value">0,920 (Muito Alto)</span>
+              </div>
+              <div class="info-item">
+                <span class="info-icon">🎓</span>
+                <span class="info-label">Nível Educacional Médio</span>
+                <span class="info-value">38,0%</span>
+              </div>
+            </div>
+            
+            <div class="comparativo-nacional">
+              <div class="comparativo-label">Estados e Distrito</div>
+              <div style="display: flex; gap: 20px; justify-content: center; margin-top: 10px;">
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: bold; color: #4CAF50;">51</div>
+                  <div style="font-size: 0.9rem; color: #666;">Total</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: bold; color: #4CAF50;">MN 57%</div>
+                  <div style="font-size: 0.9rem; color: #666;">Maior taxa</div>
+                </div>
+                <div style="text-align: center;">
+                  <div style="font-size: 1.5rem; font-weight: bold; color: #FF9800;">LA/MS 35%</div>
+                  <div style="font-size: 0.9rem; color: #666;">Menor taxa</div>
+                </div>
+              </div>
+            </div>
+          `;
+          window._amostra.Modal.show('🇺🇸 Visão Geral dos Estados Unidos', html);
+        });
+      }
     })();
   </script>
 </body>

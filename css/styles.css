@@ -931,27 +931,9 @@ footer {
         text-align: center;
     }
     
-    /* Botões de zoom em linha */
+    /* ESCONDE botões de zoom no tablet/mobile (pinch-to-zoom funciona melhor) */
     .tools > div {
-        width: 100%;
-        display: flex !important;
-        gap: 12px; /* Aumentado para mais espaço entre botões */
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 101;
-    }
-    
-    .tools > div button {
-        flex: 1;
-        min-width: 70px; /* Aumentado para melhor área de toque */
-        min-height: 48px; /* Altura mínima para touch confortável */
-        padding: 12px 14px; /* Aumentado para facilitar toque */
-        font-size: 1rem;
-        touch-action: manipulation !important; /* Evita delay no toque */
-        pointer-events: auto !important; /* Garante que seja clicável */
-        cursor: pointer !important;
-        position: relative;
-        z-index: 102;
+        display: none !important;
     }
 
     .map-wrap {
@@ -1054,25 +1036,9 @@ footer {
         margin-bottom: 16px !important;
     }
     
+    /* ESCONDE botões de zoom no mobile (pinch-to-zoom funciona melhor) */
     .tools > div {
-        z-index: 151 !important;
-        position: relative !important;
-    }
-    
-    /* Botões de zoom MAIORES em mobile pequeno para facilitar toque */
-    .tools > div button {
-        font-size: 1.2rem !important;
-        padding: 16px 20px !important; /* Extra grande para celular */
-        min-width: 80px !important; /* Área mínima de toque aumentada */
-        min-height: 52px !important; /* Altura confortável para toque */
-        touch-action: manipulation !important; /* Remove delay no toque */
-        -webkit-tap-highlight-color: rgba(34, 211, 238, 0.5) !important;
-        pointer-events: auto !important;
-        cursor: pointer !important;
-        position: relative !important;
-        z-index: 152 !important; /* Z-index muito alto */
-        background: var(--soft) !important;
-        border: 2px solid #263143 !important; /* Borda mais visível */
+        display: none !important;
     }
 
     .map-wrap {
@@ -1145,5 +1111,275 @@ footer {
     .btn:hover,
     .btn-primary:hover {
         transform: none;
+    }
+}
+
+/* ========================================
+   COUNTRY CARDS (Página Inicial)
+   ======================================== */
+
+.country-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin: 30px 0;
+}
+
+.country-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 2px solid #e0e0e0;
+    border-radius: 20px;
+    padding: 30px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.country-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+    border-color: #4CAF50;
+}
+
+.country-card-flag {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.country-card-flag img {
+    width: 120px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.country-card-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    color: #2c3e50;
+}
+
+.country-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 10px 0;
+}
+
+.stat-item {
+    background: rgba(76, 175, 80, 0.1);
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid rgba(76, 175, 80, 0.2);
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4CAF50;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.3;
+}
+
+.country-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.highlight {
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+.highlight.positive {
+    background: rgba(76, 175, 80, 0.15);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    color: #2e7d32;
+}
+
+.highlight.negative {
+    background: rgba(255, 152, 0, 0.15);
+    border: 1px solid rgba(255, 152, 0, 0.3);
+    color: #e65100;
+}
+
+.country-card-action {
+    text-align: center;
+    margin-top: auto;
+}
+
+.btn-explore {
+    display: inline-block;
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.country-card:hover .btn-explore {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+}
+
+/* ========================================
+   INFO BUTTON (Botão de Info do País)
+   ======================================== */
+
+.country-info-btn {
+    background: rgba(33, 150, 243, 0.1);
+    border: 2px solid #2196F3;
+    color: #2196F3;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 15px;
+}
+
+.country-info-btn:hover {
+    background: #2196F3;
+    color: white;
+    transform: scale(1.05);
+}
+
+.country-info-btn:active {
+    transform: scale(0.95);
+}
+
+/* ========================================
+   RESPONSIVE - Country Cards
+   ======================================== */
+
+@media (max-width: 768px) {
+    .intro-text {
+        font-size: 1rem !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .country-cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .country-card {
+        padding: 25px 20px;
+        gap: 15px;
+    }
+    
+    .country-card-flag img {
+        width: 100px;
+    }
+    
+    .country-card-title {
+        font-size: 1.6rem;
+    }
+    
+    /* Simplifica stats no mobile - mostra apenas a taxa principal */
+    .country-stats {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        align-items: center;
+    }
+    
+    .stat-item:first-child {
+        background: none;
+        border: none;
+        padding: 20px 15px;
+    }
+    
+    .stat-item:first-child .stat-value {
+        font-size: 3rem;
+        color: #4CAF50;
+    }
+    
+    .stat-item:first-child .stat-label {
+        font-size: 1rem;
+        color: #666;
+        margin-top: 5px;
+    }
+    
+    /* Esconde os outros stats no mobile */
+    .stat-item:not(:first-child) {
+        display: none;
+    }
+    
+    /* Esconde highlights no mobile */
+    .country-highlights {
+        display: none;
+    }
+    
+    .btn-explore {
+        font-size: 1.1rem;
+        padding: 14px 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .intro-text {
+        font-size: 0.95rem !important;
+        margin-bottom: 15px !important;
+    }
+    
+    .country-card {
+        padding: 20px 15px;
+    }
+    
+    .country-card-flag img {
+        width: 90px;
+    }
+    
+    .country-card-title {
+        font-size: 1.5rem;
+    }
+    
+    .stat-item:first-child .stat-value {
+        font-size: 2.5rem;
+    }
+    
+    .stat-item:first-child .stat-label {
+        font-size: 0.95rem;
+    }
+    
+    .btn-explore {
+        font-size: 1rem;
+        padding: 12px 30px;
+    }
+    
+    .footer-hint {
+        font-size: 0.9rem !important;
+        margin-top: 20px !important;
+    }
+    
+    .country-info-btn {
+        margin-left: 10px;
+        padding: 6px 12px;
+        font-size: 0.85rem;
     }
 }
