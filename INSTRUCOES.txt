@@ -1,0 +1,168 @@
+═══════════════════════════════════════════════════════════════════
+  INSTRUÇÕES PARA PERSONALIZAÇÃO - Sistema de Amostras Científicas
+═══════════════════════════════════════════════════════════════════
+
+📌 COMO SUBSTITUIR A BANDEIRA POR IMAGEM PNG DE ALTA QUALIDADE
+═══════════════════════════════════════════════════════════════════
+
+Atualmente, a bandeira está em formato SVG. Para usar uma 
+imagem PNG de alta qualidade:
+
+1. BAIXAR A BANDEIRA:
+   
+   Bandeira do Brasil:
+   https://flagcdn.com/w320/br.png (tamanho 320px)
+   https://flagcdn.com/w640/br.png (tamanho 640px - recomendado)
+
+2. SALVAR A IMAGEM:
+   - Baixe a imagem
+   - Renomeie para: br-flag.png
+   - Salve na pasta: /assets/
+
+3. ATUALIZAR O CÓDIGO:
+   Abra o arquivo index.html e altere a linha:
+   
+   DE:  <img src="./assets/Flag_of_Brazil.svg" ...
+   PARA: <img src="./assets/br-flag.png" ...
+
+4. DELETAR OS SVGs (opcional):
+   Se preferir, pode deletar os arquivos SVG de bandeira
+
+
+📌 COMO SUBSTITUIR O MAPA POR VERSÃO MAIS DETALHADA
+═══════════════════════════════════════════════════════════════════
+
+O mapa atual pode ser substituído por versões mais detalhadas:
+
+1. ENCONTRAR MAPA SVG:
+   
+   Mapa do Brasil:
+   - Procure por "Brazil map SVG states"
+   - Sites recomendados:
+     * https://simplemaps.com/resources/svg-br
+     * https://commons.wikimedia.org/wiki/File:Brazil_location_map.svg
+
+2. PREPARAR O SVG:
+   
+   IMPORTANTE: Certifique-se de que cada estado tenha um ID único!
+   
+   Para o Brasil, use: id="br-SP", id="br-RJ", id="br-MG", etc.
+   
+   Exemplo de código SVG correto:
+   <path id="br-SP" d="M 123,456 L 789,012..." />
+   ou
+   <g id="br-SP"><path d="M 123,456..." /></g>
+   
+   Se o SVG baixado usar IDs diferentes, você precisará editá-los
+   manualmente em um editor de texto.
+
+3. CÓDIGOS DOS ESTADOS DO BRASIL (27 UFs):
+   
+   AC, AL, AP, AM, BA, CE, DF, ES, GO, MA, MT, MS, MG, PA,
+   PB, PR, PE, PI, RJ, RN, RS, RO, RR, SC, SP, SE, TO
+
+4. SUBSTITUIR O ARQUIVO:
+   - Salve o novo SVG editado como br-map.svg
+   - Sobrescreva o arquivo na pasta /assets/
+   - Recarregue a página no navegador
+
+
+📌 COMO ADICIONAR OU ATUALIZAR DADOS
+═══════════════════════════════════════════════════════════════════
+
+Para atualizar ou adicionar dados dos estados:
+
+1. EDITAR DADOS DO BRASIL:
+   Abra: js/data-br.js
+   
+   Formato:
+   'SP': {
+       name: 'São Paulo',
+       intro: 'São Paulo — 97,7%; 15 anos ou mais; R$ 2.492/mês.',
+       taxa: '97,7%',
+       faixa: '15 anos ou mais',
+       renda: 'R$ 2.492/mês'
+   }
+
+2. REGRAS IMPORTANTES:
+   - Use a sigla do estado em MAIÚSCULAS como chave
+   - Campos: name (nome), intro (descrição), taxa, faixa, renda
+   - Mantenha o formato consistente para todos os estados
+
+
+📌 PERSONALIZAÇÃO DE CORES
+═══════════════════════════════════════════════════════════════════
+
+Para mudar as cores do sistema:
+
+1. Abra: css/styles.css
+
+2. Edite as variáveis no início do arquivo:
+   
+   :root {
+       --primary-color: #2563eb;      /* Azul principal */
+       --secondary-color: #1e40af;    /* Azul escuro */
+       --accent-color: #3b82f6;       /* Azul destaque */
+       --success-color: #10b981;      /* Verde sucesso */
+       --warning-color: #f59e0b;      /* Laranja aviso */
+       --danger-color: #ef4444;       /* Vermelho erro */
+   }
+
+
+📌 TESTANDO O SISTEMA
+═══════════════════════════════════════════════════════════════════
+
+1. Abra o arquivo index.html em um navegador web
+
+2. Teste a navegação:
+   - Clique na bandeira do Brasil
+   - Verifique se a página do mapa carrega corretamente
+
+3. Teste o mapa:
+   - Clique em diferentes estados brasileiros
+   - Verifique se os dados aparecem no modal
+   - Teste o hover (passar o mouse) sobre os estados
+   - Use o campo de busca para procurar estados
+
+4. Teste em diferentes dispositivos:
+   - Desktop
+   - Tablet (use modo responsivo do navegador)
+   - Mobile (use modo responsivo do navegador)
+
+
+📌 SOLUÇÃO DE PROBLEMAS
+═══════════════════════════════════════════════════════════════════
+
+PROBLEMA: Mapa não aparece
+SOLUÇÃO: Verifique se o arquivo SVG está na pasta /assets/
+         Abra o console do navegador (F12) para ver erros
+
+PROBLEMA: Estado não responde ao clique
+SOLUÇÃO: Verifique se o ID do path/grupo no SVG corresponde aos dados
+         Formato correto: br-XX (ex: br-SP, br-RJ, br-MG)
+
+PROBLEMA: Dados não aparecem
+SOLUÇÃO: Verifique o console do navegador (F12)
+         Confirme que o ID do estado existe em data-br.js
+
+PROBLEMA: Estilos não carregam
+SOLUÇÃO: Verifique se o arquivo styles.css está em /css/
+         Limpe o cache do navegador (Ctrl+Shift+Del)
+
+
+📌 RECURSOS ADICIONAIS
+═══════════════════════════════════════════════════════════════════
+
+Sites úteis para encontrar recursos:
+
+- Bandeiras: https://flagcdn.com/
+- Mapas SVG: https://simplemaps.com/
+- Cores: https://coolors.co/
+- Ícones: https://heroicons.com/
+- Fontes: https://fonts.google.com/
+
+
+═══════════════════════════════════════════════════════════════════
+Precisa de ajuda? Consulte o arquivo README.md para mais detalhes!
+═══════════════════════════════════════════════════════════════════
+

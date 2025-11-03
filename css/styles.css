@@ -1,0 +1,998 @@
+/* Dark Theme Variables */
+:root {
+    --bg: #0f172a;        /* slate-900 */
+    --card: #111827;      /* gray-900 */
+    --soft: #1f2937;      /* gray-800 */
+    --text: #e5e7eb;      /* gray-200 */
+    --muted: #9ca3af;     /* gray-400 */
+    --brand: #22d3ee;     /* cyan-400 */
+    --brand-2: #34d399;   /* emerald-400 */
+    --danger: #ef4444;    /* red-500 */
+    --focus: 3px solid rgba(34, 211, 238, .6);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    background: linear-gradient(120deg, #0b1023 0%, #0f172a 60%, #0b1023 100%);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* Container */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 100;
+}
+
+.header h1 {
+    font-size: clamp(1.3rem, 2.4vw, 2rem);
+    margin: 0;
+    color: var(--text);
+}
+
+.header small {
+    color: var(--muted);
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-top: 4px;
+}
+
+.breadcrumb {
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 100;
+}
+
+.breadcrumb a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 16px;
+    background: var(--soft);
+    border: 1px solid #263143;
+    border-radius: 10px;
+    transition: all 0.15s ease;
+    position: relative;
+    z-index: 101;
+}
+
+.breadcrumb a:hover {
+    background: var(--card);
+    border-color: var(--brand);
+    transform: translateX(-2px);
+}
+
+.back-link {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    background: var(--soft);
+    border: 1px solid #263143;
+    border-radius: 10px;
+    transition: all 0.15s ease;
+    font-weight: 500;
+    position: relative;
+    z-index: 101;
+}
+
+.back-link:hover {
+    background: var(--card);
+    border-color: var(--brand);
+    transform: translateX(-2px);
+}
+
+/* Card Styles */
+.card {
+    background: linear-gradient(180deg, var(--card), #0d131f 120%);
+    border: 1px solid #1f2937;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, .35);
+}
+
+/* Grid System */
+.grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(12, 1fr);
+}
+
+.full {
+    grid-column: 1/-1;
+}
+
+.col-6 {
+    grid-column: span 6;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Home Page Flags */
+.flags {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.flag-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    background: var(--soft);
+    border: 1px solid #263143;
+    border-radius: 16px;
+    padding: 18px;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform .15s ease, border-color .15s ease;
+    cursor: pointer;
+}
+
+.flag-btn:hover {
+    transform: translateY(-2px);
+    border-color: var(--brand);
+}
+
+.flag-img {
+    width: min(280px, 60vw);
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #2b364a;
+    background: #0b0f1b;
+}
+
+.flag-label {
+    font-size: 1.1rem;
+    color: var(--muted);
+}
+
+.country-card h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--text);
+}
+
+.country-card p {
+    color: var(--muted);
+    margin: 8px 0 0 0;
+}
+
+.notice {
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+/* Buttons */
+.btn-primary,
+.btn,
+.secondary {
+    background: var(--brand);
+    color: var(--bg);
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    touch-action: manipulation; /* Remove delay de 300ms no mobile */
+    -webkit-tap-highlight-color: rgba(34, 211, 238, 0.3); /* Feedback visual no toque */
+}
+
+.btn.secondary,
+.secondary {
+    background: var(--soft);
+    color: var(--text);
+    border: 1px solid #263143;
+}
+
+.btn-primary:hover,
+.btn:hover {
+    background: var(--brand-2);
+    transform: scale(1.05);
+}
+
+.btn.secondary:hover {
+    background: var(--card);
+    border-color: var(--brand);
+    transform: scale(1.05);
+}
+
+/* Map Container */
+.map-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 18px;
+}
+
+@media (max-width: 1024px) {
+    .map-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.map-wrap {
+    position: relative;
+    width: 100%;
+    min-height: 60vh;
+    max-height: 70vh; /* Limita altura para não invadir controles */
+    display: flex;
+    align-items: flex-start; /* Começa do topo para permitir scroll superior */
+    justify-content: flex-start; /* Começa da esquerda para permitir scroll lateral */
+    padding: 0; /* REMOVIDO padding - estava impedindo acesso às extremidades */
+    background: transparent !important; /* Força transparente */
+    z-index: 1; /* Abaixo dos controles */
+    overflow: auto; /* Permite scroll quando o mapa aumenta */
+    border-radius: 12px; /* Visual mais bonito */
+    -webkit-overflow-scrolling: touch; /* Scroll suave no mobile */
+}
+
+/* Scrollbar customizada para o mapa */
+.map-wrap::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.map-wrap::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 5px;
+}
+
+.map-wrap::-webkit-scrollbar-thumb {
+    background: rgba(34, 211, 238, 0.5);
+    border-radius: 5px;
+}
+
+.map-wrap::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 211, 238, 0.8);
+}
+
+.map-box {
+    /* Deixa o SVG controlar o tamanho completamente */
+    width: 100%; /* Ocupa todo o espaço disponível */
+    height: auto;
+    display: block;
+    background: transparent !important;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    overflow: visible; /* Permite que conteúdo cresça além dos limites */
+}
+
+.map-box svg {
+    max-width: none; /* Remove limite máximo - permite crescer livremente */
+    width: 100%; /* Base: 100% do container */
+    height: auto;
+    background: transparent !important;
+    position: relative;
+    z-index: 1;
+    display: block;
+}
+
+/* Remove qualquer fundo preto de elementos dentro do map-box */
+.map-box *:not(path):not(g):not(svg) {
+    background: transparent !important;
+}
+
+.map-box path,
+.map-box g[id^="br-"] {
+    cursor: pointer;
+    outline: none;
+}
+
+#br-map-container {
+    width: 100%;
+    max-width: 100%;
+}
+
+#br-map-container svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Map States */
+/* --- Map States (não sobrescrever as cores do SVG) --- */
+.map-state,
+.state {
+  /* sem fill aqui! deixa a cor do próprio SVG aparecer */
+  stroke: #334155;
+  stroke-width: .8;
+  cursor: pointer;
+  transition: filter 0.2s ease, stroke 0.3s ease;
+}
+
+/* Estado encontrado pela busca - BRILHO SUPER FORTE */
+/* Valores são definidos via JavaScript de forma proporcional ao viewBox */
+.state-found {
+  animation: pulseGlow 1.2s ease-in-out infinite;
+  stroke: #22d3ee !important;
+  /* stroke-width é definido via JS inline - não usar !important aqui */
+  /* filter é definido via JS inline - não usar !important aqui */
+}
+
+/* Para grupos <g>, aplicar também aos paths internos - MUITO BRILHO */
+g.state-found path {
+  stroke: #22d3ee !important;
+  opacity: 1 !important;
+  /* stroke-width e filter são definidos via JS inline */
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+/* hover sutil que NÃO troca a cor original */
+.map-state:hover,
+.state:hover {
+  filter: brightness(1.12);
+}
+
+/* foco acessível */
+.map-state:focus,
+.state:focus {
+  outline: var(--focus);
+}
+
+/* destaque de seleção sem mudar a cor original */
+.map-state.active,
+.state.active {
+  filter: brightness(1.2);
+  stroke: var(--brand-2);
+  stroke-width: 1.5;
+}
+
+/* se quiser marcar estados "com dados", evite fill */
+.map-state.has-data,
+.state.has-data {
+  box-shadow: 0 0 0 2px rgba(52, 211, 153, .35);
+}
+
+/* === CORES POR REGIÃO - BRASIL === */
+/* Norte (Verde) */
+#br-AC, #br-AM, #br-AP, #br-PA, #br-RO, #br-RR, #br-TO,
+g#br-AC, g#br-AM, g#br-AP, g#br-PA, g#br-RO, g#br-RR, g#br-TO {
+    fill: #6b9d3e !important;
+}
+#br-AC path, #br-AM path, #br-AP path, #br-PA path, #br-RO path, #br-RR path, #br-TO path {
+    fill: #6b9d3e !important;
+}
+
+/* Nordeste (Laranja) */
+#br-AL, #br-BA, #br-CE, #br-MA, #br-PB, #br-PE, #br-PI, #br-RN, #br-SE,
+g#br-AL, g#br-BA, g#br-CE, g#br-MA, g#br-PB, g#br-PE, g#br-PI, g#br-RN, g#br-SE,
+[id="br-AL"], [id="br-BA"], [id="br-CE"], [id="br-MA"], [id="br-PB"], [id="br-PE"], [id="br-PI"], [id="br-RN"], [id="br-SE"] {
+    fill: #ff9933 !important;
+}
+#br-AL *, #br-BA *, #br-CE *, #br-MA *, #br-PB *, #br-PE *, #br-PI *, #br-RN *, #br-SE * {
+    fill: #ff9933 !important;
+}
+
+/* Centro-Oeste (Amarelo) */
+#br-DF, #br-GO, #br-MT, #br-MS,
+g#br-DF, g#br-GO, g#br-MT, g#br-MS {
+    fill: #ffd966 !important;
+}
+#br-DF path, #br-GO path, #br-MT path, #br-MS path {
+    fill: #ffd966 !important;
+}
+
+/* Sudeste (Vermelho) */
+#br-ES, #br-MG, #br-RJ, #br-SP,
+g#br-ES, g#br-MG, g#br-RJ, g#br-SP {
+    fill: #cc0000 !important;
+}
+#br-ES path, #br-MG path, #br-RJ path, #br-SP path {
+    fill: #cc0000 !important;
+}
+
+/* Sul (Azul) */
+#br-PR, #br-RS, #br-SC,
+g#br-PR, g#br-RS, g#br-SC {
+    fill: #6699ff !important;
+}
+#br-PR path, #br-RS path, #br-SC path {
+    fill: #6699ff !important;
+}
+
+/* === CORES POR REGIÃO - ESTADOS UNIDOS === */
+/* West Coast (Azul Pacífico) */
+#usa-CA, #usa-OR, #usa-WA, #usa-AK, #usa-HI,
+g#usa-CA, g#usa-OR, g#usa-WA, g#usa-AK, g#usa-HI {
+    fill: #4169e1 !important;
+}
+#usa-CA path, #usa-OR path, #usa-WA path, #usa-AK path, #usa-HI path {
+    fill: #4169e1 !important;
+}
+
+/* Southwest (Laranja/Terracota) */
+#usa-AZ, #usa-NM, #usa-NV, #usa-UT,
+g#usa-AZ, g#usa-NM, g#usa-NV, g#usa-UT {
+    fill: #ff8c42 !important;
+}
+#usa-AZ path, #usa-NM path, #usa-NV path, #usa-UT path {
+    fill: #ff8c42 !important;
+}
+
+/* Mountain (Verde Montanha) */
+#usa-CO, #usa-ID, #usa-MT, #usa-WY,
+g#usa-CO, g#usa-ID, g#usa-MT, g#usa-WY {
+    fill: #6b9d3e !important;
+}
+#usa-CO path, #usa-ID path, #usa-MT path, #usa-WY path {
+    fill: #6b9d3e !important;
+}
+
+/* South (Vermelho) */
+#usa-TX, #usa-OK, #usa-AR, #usa-LA, #usa-MS, #usa-AL, #usa-TN, #usa-KY, #usa-WV, #usa-VA, #usa-NC, #usa-SC, #usa-GA, #usa-FL,
+g#usa-TX, g#usa-OK, g#usa-AR, g#usa-LA, g#usa-MS, g#usa-AL, g#usa-TN, g#usa-KY, g#usa-WV, g#usa-VA, g#usa-NC, g#usa-SC, g#usa-GA, g#usa-FL {
+    fill: #dc143c !important;
+}
+#usa-TX path, #usa-OK path, #usa-AR path, #usa-LA path, #usa-MS path, #usa-AL path, #usa-TN path, #usa-KY path, #usa-WV path, #usa-VA path, #usa-NC path, #usa-SC path, #usa-GA path, #usa-FL path {
+    fill: #dc143c !important;
+}
+
+/* Midwest (Amarelo Ouro) */
+#usa-ND, #usa-SD, #usa-NE, #usa-KS, #usa-MN, #usa-IA, #usa-MO, #usa-WI, #usa-IL, #usa-IN, #usa-OH, #usa-MI,
+g#usa-ND, g#usa-SD, g#usa-NE, g#usa-KS, g#usa-MN, g#usa-IA, g#usa-MO, g#usa-WI, g#usa-IL, g#usa-IN, g#usa-OH, g#usa-MI {
+    fill: #ffd700 !important;
+}
+#usa-ND path, #usa-SD path, #usa-NE path, #usa-KS path, #usa-MN path, #usa-IA path, #usa-MO path, #usa-WI path, #usa-IL path, #usa-IN path, #usa-OH path, #usa-MI path {
+    fill: #ffd700 !important;
+}
+
+/* Northeast (Verde Esmeralda) */
+#usa-ME, #usa-NH, #usa-VT, #usa-MA, #usa-RI, #usa-CT, #usa-NY, #usa-NJ, #usa-PA, #usa-DE, #usa-MD, #usa-DC,
+g#usa-ME, g#usa-NH, g#usa-VT, g#usa-MA, g#usa-RI, g#usa-CT, g#usa-NY, g#usa-NJ, g#usa-PA, g#usa-DE, g#usa-MD, g#usa-DC {
+    fill: #228b22 !important;
+}
+#usa-ME path, #usa-NH path, #usa-VT path, #usa-MA path, #usa-RI path, #usa-CT path, #usa-NY path, #usa-NJ path, #usa-PA path, #usa-DE path, #usa-MD path, #usa-DC path {
+    fill: #228b22 !important;
+}
+
+/* Info Panel */
+.info-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.state-info,
+.state-details {
+    background: linear-gradient(180deg, var(--card), #0d131f 120%);
+    border: 1px solid #1f2937;
+    border-radius: 18px;
+    padding: 20px;
+}
+
+.state-info h3,
+.state-details h3 {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+    color: var(--brand);
+}
+
+.state-info p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.data-grid {
+    display: grid;
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.data-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px;
+    background: var(--soft);
+    border-radius: 12px;
+    border-left: 3px solid var(--brand);
+}
+
+.data-item .label {
+    font-size: 0.875rem;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.data-item .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* Toolbar & Tools */
+.toolbar,
+.tools {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Aumentado para criar espaço claro */
+    padding-bottom: 12px; /* Padding adicional */
+    position: relative;
+    z-index: 100; /* Sempre acima do mapa */
+    background: var(--bg); /* Fundo para não parecer que o mapa está por trás */
+}
+
+.tools input[type="search"] {
+    flex: 1;
+    min-width: 200px;
+    background: #0c1220;
+    border: 1px solid #273049;
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    position: relative;
+    z-index: 101;
+}
+
+.search {
+    flex: 1;
+    min-width: 220px;
+    background: #0c1220;
+    border: 1px solid #273049;
+    color: var(--text);
+    padding: 10px 12px;
+    border-radius: 10px;
+    position: relative;
+    z-index: 101;
+}
+
+.tools > div,
+.tools button {
+    position: relative;
+    z-index: 101;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #0c1220;
+    border: 1px solid #273049;
+    color: var(--muted);
+    font-size: .9rem;
+}
+
+/* Modal */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, .66);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 200; /* Acima de TUDO - controles têm z-index 100 */
+    padding: 20px;
+    /* RESET DE ZOOM - Garante que modal sempre apareça em tamanho normal */
+    transform: none !important;
+    zoom: 1 !important;
+    scale: 1 !important;
+}
+
+.modal-backdrop.show {
+    display: flex;
+}
+
+.modal {
+    width: min(680px, 95vw);
+    background: var(--card);
+    border: 1px solid #263143;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 30px 120px rgba(0, 0, 0, .55);
+    /* RESET DE ZOOM - Garante tamanho normal */
+    transform: none !important;
+    zoom: 1 !important;
+    scale: 1 !important;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid #263143;
+    /* RESET DE ZOOM */
+    transform: none !important;
+    zoom: 1 !important;
+    scale: 1 !important;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.1rem !important;
+    /* RESET DE ZOOM */
+    transform: none !important;
+    zoom: 1 !important;
+    scale: 1 !important;
+}
+
+.modal-close {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid #2b364a;
+    border-radius: 10px;
+    padding: 8px 10px;
+    cursor: pointer;
+    /* RESET DE ZOOM */
+    transform: none !important;
+    zoom: 1 !important;
+    scale: 1 !important;
+    font-size: 0.9rem !important;
+}
+
+.modal-body {
+    padding: 16px;
+    /* RESET DE ZOOM */
+    transform: none !important;
+    zoom: 1 !important;
+    scale: 1 !important;
+    font-size: 1rem !important;
+}
+
+/* RESET GLOBAL: Todos os elementos dentro do modal não herdam zoom */
+.modal-backdrop *, 
+.modal *, 
+.modal-header *, 
+.modal-body *, 
+.modal-title,
+.modal-close {
+    transform: none !important;
+    zoom: 1 !important;
+    scale: 1 !important;
+}
+
+.kbd {
+    border: 1px solid #2b364a;
+    border-bottom-width: 2px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    font-size: .9rem;
+    color: var(--muted);
+}
+
+/* Footer */
+footer {
+    margin-top: 24px;
+    color: var(--muted);
+    font-size: .9rem;
+    text-align: center;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card,
+.flag-btn {
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    .header h1 {
+        font-size: 1.3rem;
+    }
+
+    .header small {
+        font-size: 0.85rem;
+    }
+
+    .tools,
+    .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        z-index: 100; /* Mantém acima do mapa em mobile */
+        position: sticky; /* Fica sempre visível ao rolar */
+        top: 0;
+        background: var(--bg); /* Fundo sólido */
+        padding: 12px 0; /* Espaço ao redor */
+    }
+
+    .tools input[type="search"],
+    .search {
+        width: 100%;
+        min-width: 100%;
+        z-index: 101;
+        position: relative;
+    }
+    
+    /* Garantir que .card.tools seja clicável */
+    section.card.tools {
+        z-index: 100 !important;
+        position: relative !important;
+    }
+
+    .tools > button,
+    .btn-primary {
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Botões de zoom em linha */
+    .tools > div {
+        width: 100%;
+        display: flex !important;
+        gap: 12px; /* Aumentado para mais espaço entre botões */
+        flex-wrap: wrap;
+        position: relative;
+        z-index: 101;
+    }
+    
+    .tools > div button {
+        flex: 1;
+        min-width: 70px; /* Aumentado para melhor área de toque */
+        min-height: 48px; /* Altura mínima para touch confortável */
+        padding: 12px 14px; /* Aumentado para facilitar toque */
+        font-size: 1rem;
+        touch-action: manipulation !important; /* Evita delay no toque */
+        pointer-events: auto !important; /* Garante que seja clicável */
+        cursor: pointer !important;
+        position: relative;
+        z-index: 102;
+    }
+
+    .map-wrap {
+        height: 60vh !important;
+        max-height: 60vh !important;
+        padding: 0 !important;
+        overflow: auto !important;
+        overflow-x: auto !important;
+        overflow-y: auto !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+
+    .map-box {
+        min-width: 200% !important;
+        min-height: 200% !important;
+        width: 200% !important;
+        height: 200% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+    }
+
+    .map-box svg {
+        height: auto !important;
+        width: 50% !important;
+        max-width: none !important;
+        max-height: none !important;
+        display: block !important;
+        cursor: grab;
+        flex-shrink: 0;
+    }
+    
+    .map-box svg:active {
+        cursor: grabbing;
+    }
+    
+    /* Centraliza o scroll no início */
+    .map-wrap {
+        scroll-behavior: smooth;
+    }
+
+    /* Ajusta siglas para mobile */
+    .map-box text[data-label] {
+        font-size: 10px !important;
+    }
+    
+    /* Garante que scroll funcione em todas as direções */
+    .map-wrap::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    
+    .map-wrap::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+    }
+    
+    .map-wrap::-webkit-scrollbar-thumb {
+        background: rgba(34, 211, 238, 0.5);
+        border-radius: 4px;
+    }
+    
+    .map-wrap::-webkit-scrollbar-thumb:hover {
+        background: rgba(34, 211, 238, 0.8);
+    }
+
+    /* Cards com menos padding */
+    .card {
+        padding: 16px;
+    }
+
+    .card.full {
+        overflow: visible !important;
+    }
+
+
+    /* Flags menores em mobile */
+    .flag-img {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.1rem;
+    }
+    
+    /* CRÍTICO: Garantir que controles sejam acessíveis em celular */
+    section.card.tools {
+        z-index: 150 !important;
+        position: sticky !important;
+        top: 0 !important;
+        background: var(--bg) !important;
+        margin-bottom: 16px !important;
+    }
+    
+    .tools > div {
+        z-index: 151 !important;
+        position: relative !important;
+    }
+    
+    /* Botões de zoom MAIORES em mobile pequeno para facilitar toque */
+    .tools > div button {
+        font-size: 1.2rem !important;
+        padding: 16px 20px !important; /* Extra grande para celular */
+        min-width: 80px !important; /* Área mínima de toque aumentada */
+        min-height: 52px !important; /* Altura confortável para toque */
+        touch-action: manipulation !important; /* Remove delay no toque */
+        -webkit-tap-highlight-color: rgba(34, 211, 238, 0.5) !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        position: relative !important;
+        z-index: 152 !important; /* Z-index muito alto */
+        background: var(--soft) !important;
+        border: 2px solid #263143 !important; /* Borda mais visível */
+    }
+
+    .map-wrap {
+        height: 55vh !important;
+        max-height: 55vh !important;
+        padding: 0 !important;
+        overflow: auto !important;
+        overflow-x: auto !important;
+        overflow-y: auto !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        justify-content: flex-start !important;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+    }
+
+    .map-box {
+        min-width: 200% !important;
+        min-height: 200% !important;
+        width: 200% !important;
+        height: 200% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-shrink: 0 !important;
+    }
+
+    .map-box svg {
+        height: auto !important;
+        width: 50% !important;
+        max-width: none !important;
+        max-height: none !important;
+        display: block !important;
+        cursor: grab;
+        flex-shrink: 0;
+    }
+    
+    .map-box svg:active {
+        cursor: grabbing;
+    }
+
+    /* Siglas ainda menores em telas muito pequenas */
+    .map-box text[data-label] {
+        font-size: 8px !important;
+        stroke-width: 4px !important;
+    }
+    
+    /* Scrollbar menor em mobile pequeno */
+    .map-wrap::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    /* Cards ainda menores */
+    .card {
+        padding: 12px;
+    }
+
+    .card.full {
+        overflow: visible !important;
+    }
+
+}
+
+@media (hover: none) {
+    .flag-btn:hover {
+        transform: none;
+    }
+
+    .btn:hover,
+    .btn-primary:hover {
+        transform: none;
+    }
+}

@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5.0, user-scalable=yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Estados Unidos — Amostra Científica</title>
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <a href="./index.html" class="back-link">&larr; Voltar</a>
+      <h1>Estados Unidos</h1>
+      <small>Clique nos estados para ver mais informações</small>
+    </header>
+
+    <section class="card tools">
+      <input
+        type="search"
+        id="search-usa"
+        placeholder="Buscar estado (ex: California, Texas, Florida...)"
+        aria-label="Buscar estado dos EUA"
+      />
+      <div style="display: flex; gap: 8px;">
+        <button id="zoom-in-usa" class="btn secondary" title="Aumentar Zoom">🔍+</button>
+        <button id="zoom-out-usa" class="btn secondary" title="Diminuir Zoom">🔍-</button>
+        <button id="zoom-reset-usa" class="btn secondary" title="Resetar Zoom">↺</button>
+      </div>
+    </section>
+
+    <section class="card full">
+      <div class="map-wrap">
+        <div id="map-usa" class="map-box center">
+          <!-- SVG dos EUA será injetado aqui -->
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script src="./js/data-us.js"></script>
+  <script src="./js/app.js"></script>
+  <script>
+    (async () => {
+      const box = document.getElementById('map-usa');
+      const svg = await window._amostra.injectSVG('./assets/usa-map.svg', box);
+      const svgRoot = svg || box.querySelector('svg');
+      
+      setTimeout(() => {
+        if (svgRoot) {
+          svgRoot.setAttribute('width', '100%');
+          svgRoot.setAttribute('height', 'auto');
+          svgRoot.style.maxWidth = 'none';
+          svgRoot.style.height = 'auto';
+          
+          if (!svgRoot.hasAttribute('viewBox')) {
+            const bbox = svgRoot.getBBox();
+            svgRoot.setAttribute('viewBox', `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`);
+          }
+          svgRoot.setAttribute('preserveAspectRatio', 'xMinYMin meet');
+          console.log('✓ SVG configurado:', svgRoot.getAttribute('viewBox'));
+        }
+        
+        const allStates = svgRoot.querySelectorAll('[id^="usa-"]');
+        console.log(`Estados encontrados: ${allStates.length}`);
+        
+        const todosEstados = [
+          'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA',
+          'HI','ID','IL','IN','IA','KS','KY','LA','ME','MD',
+          'MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ',
+          'NM','NY','NC','ND','OH','OK','OR','PA','RI','SC',
+          'SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'
+        ];
+        
+        const existingIds = Array.from(allStates).map(s => s.id.replace('usa-', ''));
+        const faltando = todosEstados.filter(uf => !existingIds.includes(uf));
+        
+        if (faltando.length > 0) {
+          console.log('Estados faltando no SVG:', faltando);
+        }
+        
+        window._amostra.bindMapInteractions(svgRoot, window.usaData || {}, 'usa');
+        window._amostra.addStateLabels(svgRoot, 'usa');
+        
+        setTimeout(() => {
+          const searchInput = document.getElementById('search-usa');
+          
+          if (!window.usaData) {
+            console.error('❌ window.usaData não está definido!');
+            console.log('Tentando scripts alternativos...');
+          }
+          
+          const dataset = window.usaData || window.USA_STATES || {};
+          
+          console.log('🔍 Teste de busca EUA:', {
+            searchInput: !!searchInput,
+            svgRoot: !!svgRoot,
+            usaDataExiste: !!window.usaData,
+            datasetExiste: !!dataset,
+            totalEstados: Object.keys(dataset).length,
+            primeiroEstado: Object.keys(dataset)[0]
+          });
+          
+          if (!searchInput) {
+            console.error('❌ Campo de busca não encontrado!');
+            return;
+          }
+          
+          if (!svgRoot) {
+            console.error('❌ SVG não encontrado!');
+            return;
+          }
+          
+          if (Object.keys(dataset).length === 0) {
+            console.error('❌ Dataset está vazio! Verifique se data-us.js foi carregado.');
+            return;
+          }
+          
+          window._amostra.bindSearch('#search-usa', svgRoot, dataset, 'usa');
+          console.log('✓ Busca vinculada para Estados Unidos com', Object.keys(dataset).length, 'estados');
+          
+          window.testarBuscaEUA = function(termo) {
+            searchInput.value = termo;
+            searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+          };
+          console.log('💡 Para testar, digite no console: testarBuscaEUA("calif")');
+        }, 500);
+        
+        console.log('✓ Mapa dos Estados Unidos configurado completamente');
+        
+        const isMobile = window.innerWidth <= 768;
+        let currentZoom = isMobile ? 0.6 : 0.9;
+        const minZoom = 0.3;
+        const maxZoom = 6;
+        const zoomStep = 0.3;
+        
+        function applyZoom(zoom) {
+          if (svgRoot) {
+            const widthPercent = zoom * 100;
+            svgRoot.style.width = `${widthPercent}%`;
+            svgRoot.style.height = 'auto';
+            svgRoot.style.transition = 'width 0.3s ease';
+            svgRoot.style.transformOrigin = 'top left';
+            svgRoot.style.transform = '';
+          }
+        }
+        
+        applyZoom(currentZoom);
+        
+        setTimeout(() => {
+          console.log('✓ Zoom inicial aplicado');
+        }, 100);
+        
+        // Funções de zoom
+        const zoomIn = () => {
+          currentZoom = Math.min(currentZoom + zoomStep, maxZoom);
+          applyZoom(currentZoom);
+        };
+        
+        const zoomOut = () => {
+          currentZoom = Math.max(currentZoom - zoomStep, minZoom);
+          applyZoom(currentZoom);
+        };
+        
+        const zoomReset = () => {
+          currentZoom = isMobile ? 0.6 : 0.9;
+          applyZoom(currentZoom);
+        };
+        
+        // Botão Zoom In - TOUCH + CLICK
+        const btnZoomIn = document.getElementById('zoom-in-usa');
+        btnZoomIn.addEventListener('click', zoomIn);
+        btnZoomIn.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          zoomIn();
+        }, { passive: false });
+        
+        // Botão Zoom Out - TOUCH + CLICK
+        const btnZoomOut = document.getElementById('zoom-out-usa');
+        btnZoomOut.addEventListener('click', zoomOut);
+        btnZoomOut.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          zoomOut();
+        }, { passive: false });
+        
+        // Botão Reset - TOUCH + CLICK
+        const btnReset = document.getElementById('zoom-reset-usa');
+        btnReset.addEventListener('click', zoomReset);
+        btnReset.addEventListener('touchend', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          zoomReset();
+        }, { passive: false });
+        
+        // ===== PINCH-TO-ZOOM =====
+        let initialDistance = 0;
+        let initialZoom = 1;
+        let isPinching = false;
+        
+        const mapWrap = document.querySelector('.map-wrap');
+        
+        console.log('🎯 Configurando pinch-to-zoom...');
+        
+        mapWrap.addEventListener('touchstart', (e) => {
+          if (e.touches.length === 2) {
+            isPinching = true;
+            const touch1 = e.touches[0];
+            const touch2 = e.touches[1];
+            initialDistance = Math.hypot(
+              touch2.clientX - touch1.clientX,
+              touch2.clientY - touch1.clientY
+            );
+            initialZoom = currentZoom;
+            console.log('✅ Pinch iniciado! Distância:', initialDistance.toFixed(0));
+          }
+        }, { passive: true });
+        
+        mapWrap.addEventListener('touchmove', (e) => {
+          if (e.touches.length === 2 && isPinching) {
+            const touch1 = e.touches[0];
+            const touch2 = e.touches[1];
+            const distance = Math.hypot(
+              touch2.clientX - touch1.clientX,
+              touch2.clientY - touch1.clientY
+            );
+            
+            const scale = distance / initialDistance;
+            const newZoom = Math.max(minZoom, Math.min(maxZoom, initialZoom * scale));
+            
+            if (Math.abs(newZoom - currentZoom) > 0.02) {
+              currentZoom = newZoom;
+              applyZoom(currentZoom);
+              console.log('🔍 Zoom aplicado:', (currentZoom * 100).toFixed(0) + '%');
+            }
+          }
+        }, { passive: true });
+        
+        mapWrap.addEventListener('touchend', (e) => {
+          if (isPinching) {
+            console.log('✅ Pinch finalizado! Zoom final:', (currentZoom * 100).toFixed(0) + '%');
+            isPinching = false;
+          }
+        }, { passive: true });
+        
+        console.log('✓ Controles de zoom habilitados');
+      }, 150);
+    })();
+  </script>
+</body>
+</html>

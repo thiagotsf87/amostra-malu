@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QR Code - Teste Mobile</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+    }
+    h1 {
+      margin: 0 0 16px 0;
+      font-size: 2rem;
+    }
+    .subtitle {
+      opacity: 0.9;
+      margin-bottom: 32px;
+      font-size: 1.1rem;
+    }
+    .qr-container {
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      display: inline-block;
+      margin-bottom: 24px;
+    }
+    .url {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      word-break: break-all;
+    }
+    .instructions {
+      text-align: left;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 24px;
+    }
+    .instructions li {
+      margin: 8px 0;
+      line-height: 1.6;
+    }
+    .note {
+      background: rgba(255, 200, 0, 0.2);
+      border-left: 4px solid #ffc107;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: 16px;
+      text-align: left;
+    }
+    .links {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .links a {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      text-decoration: none;
+      padding: 16px;
+      border-radius: 12px;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+    .links a:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📱 Teste Mobile</h1>
+    <p class="subtitle">Escaneie o QR Code no seu celular</p>
+    
+    <div class="qr-container">
+      <canvas id="qrcode"></canvas>
+    </div>
+    
+    <div class="url" id="url-display">http://192.168.68.106:8000</div>
+    
+    <div class="instructions">
+      <strong>📋 Como testar:</strong>
+      <ol>
+        <li>Abra a câmera do celular</li>
+        <li>Aponte para o QR Code acima</li>
+        <li>Toque na notificação que aparecer</li>
+        <li>Ou digite manualmente: <code>192.168.68.106:8000</code></li>
+      </ol>
+    </div>
+    
+    <div class="note">
+      <strong>⚠️ Importante:</strong><br>
+      Certifique-se que o celular está na <strong>mesma rede Wi-Fi</strong> que este computador!
+    </div>
+    
+    <div class="links">
+      <a href="http://192.168.68.106:8000">🏠 Página Inicial</a>
+      <a href="http://192.168.68.106:8000/brasil.html">🇧🇷 Mapa do Brasil</a>
+      <a href="http://192.168.68.106:8000/usa.html">🇺🇸 Mapa dos EUA</a>
+    </div>
+  </div>
+
+  <script>
+    // QR Code Generator (biblioteca inline simples)
+    !function(t,e){"object"==typeof exports&&"undefined"!=typeof module?module.exports=e():"function"==typeof define&&define.amd?define(e):(t="undefined"!=typeof globalThis?globalThis:t||self).QRCode=e()}(this,(function(){"use strict";function t(t,e,n,r,o){this.typeNumber=t,this.errorCorrectLevel=e,this.modules=null,this.moduleCount=0,this.dataCache=null,this.dataList=new Array}t.prototype={addData:function(e){var n=new r(e);this.dataList.push(n),this.dataCache=null},isDark:function(t,e){if(t<0||this.moduleCount<=t||e<0||this.moduleCount<=e)throw new Error(t+","+e);return this.modules[t][e]},getModuleCount:function(){return this.moduleCount},make:function(){this.makeImpl(!1,this.getBestMaskPattern())},makeImpl:function(e,r){this.moduleCount=4*this.typeNumber+17,this.modules=new Array(this.moduleCount);for(var o=0;o<this.moduleCount;o++){this.modules[o]=new Array(this.moduleCount);for(var i=0;i<this.moduleCount;i++)this.modules[o][i]=null}this.setupPositionProbePattern(0,0),this.setupPositionProbePattern(this.moduleCount-7,0),this.setupPositionProbePattern(0,this.moduleCount-7),this.setupPositionAdjustPattern(),this.setupTimingPattern(),this.setupTypeInfo(e,r),this.typeNumber>=7&&this.setupTypeNumber(e),null==this.dataCache&&(this.dataCache=t.createData(this.typeNumber,this.errorCorrectLevel,this.dataList)),this.mapData(this.dataCache,r)},setupPositionProbePattern:function(t,e){for(var n=-1;n<=7;n++)if(!(t+n<=-1||this.moduleCount<=t+n))for(var r=-1;r<=7;r++)e+r<=-1||this.moduleCount<=e+r||(this.modules[t+n][e+r]=0<=n&&n<=6&&(0==r||6==r)||0<=r&&r<=6&&(0==n||6==n)||2<=n&&n<=4&&2<=r&&r<=4)},getBestMaskPattern:function(){for(var t=0,e=0,n=0;n<8;n++){this.makeImpl(!0,n);var r=a.getLostPoint(this);(0==n||t>r)&&(t=r,e=n)}return e},createMovieClip:function(t,e,n){var r=t.createEmptyMovieClip(e,n);this.make();for(var o=0;o<this.modules.length;o++)for(var i=1*o,a=0;a<this.modules[o].length;a++){var u=1*a;this.modules[o][a]&&(r.beginFill(0,100),r.moveTo(u,i),r.lineTo(u+1,i),r.lineTo(u+1,i+1),r.lineTo(u,i+1),r.endFill())}return r},setupTimingPattern:function(){for(var t=8;t<this.moduleCount-8;t++)null==this.modules[t][6]&&(this.modules[t][6]=t%2==0);for(var e=8;e<this.moduleCount-8;e++)null==this.modules[6][e]&&(this.modules[6][e]=e%2==0)},setupPositionAdjustPattern:function(){for(var t=a.getPatternPosition(this.typeNumber),e=0;e<t.length;e++)for(var n=0;n<t.length;n++){var r=t[e],o=t[n];if(null==this.modules[r][o])for(var i=-2;i<=2;i++)for(var u=-2;u<=2;u++)this.modules[r+i][o+u]=-2==i||2==i||-2==u||2==u||0==i&&0==u}},setupTypeNumber:function(t){for(var e=a.getBCHTypeNumber(this.typeNumber),n=0;n<18;n++){var r=!t&&1==(e>>n&1);this.modules[Math.floor(n/3)][n%3+this.moduleCount-8-3]=r}for(n=0;n<18;n++){r=!t&&1==(e>>n&1);this.modules[n%3+this.moduleCount-8-3][Math.floor(n/3)]=r}},setupTypeInfo:function(t,e){for(var n=this.errorCorrectLevel<<3|e,r=a.getBCHTypeInfo(n),o=0;o<15;o++){var i=!t&&1==(r>>o&1);o<6?this.modules[o][8]=i:o<8?this.modules[o+1][8]=i:this.modules[this.moduleCount-15+o][8]=i}for(o=0;o<15;o++){i=!t&&1==(r>>o&1);o<8?this.modules[8][this.moduleCount-o-1]=i:o<9?this.modules[8][15-o-1+1]=i:this.modules[8][15-o-1]=i}this.modules[this.moduleCount-8][8]=!t},mapData:function(t,e){for(var n=-1,r=this.moduleCount-1,o=7,i=0,u=this.moduleCount-1;u>0;u-=2)for(6==u&&u--;;){for(var s=0;s<2;s++)if(null==this.modules[r][u-s]){var l=!1;i<t.length&&(l=1==(t[i]>>>o&1)),a.getMask(e,r,u-s)&&(l=!l),this.modules[r][u-s]=l,-1==--o&&(i++,o=7)}if((r+=n)<0||this.moduleCount<=r){r-=n,n=-n;break}}}},t.PAD0=236,t.PAD1=17,t.createData=function(e,n,r){for(var i=o.getRSBlocks(e,n),a=new u,s=0;s<r.length;s++){var l=r[s];a.put(l.mode,4),a.put(l.getLength(),c.getLengthInBits(l.mode,e)),l.write(a)}var h=0;for(s=0;s<i.length;s++)h+=i[s].dataCount;if(a.getLengthInBits()>8*h)throw new Error("code length overflow. ("+a.getLengthInBits()+">"+8*h+")");for(a.getLengthInBits()+4<=8*h&&a.put(0,4);a.getLengthInBits()%8!=0;)a.putBit(!1);for(;!(a.getLengthInBits()>=8*h||(a.put(t.PAD0,8),a.getLengthInBits()>=8*h));)a.put(t.PAD1,8);return t.createBytes(a,i)},t.createBytes=function(t,e){for(var r=0,o=0,i=0,u=new Array(e.length),s=new Array(e.length),l=0;l<e.length;l++){var h=e[l].dataCount,f=e[l].totalCount-h;o=Math.max(o,h),i=Math.max(i,f),u[l]=new Array(h);for(var g=0;g<u[l].length;g++)u[l][g]=255&t.buffer[g+r];r+=h;var d=a.getErrorCorrectPolynomial(f),m=new n(u[l],d.getLength()-1).mod(d);s[l]=new Array(d.getLength()-1);for(g=0;g<s[l].length;g++){var v=g+m.getLength()-s[l].length;s[l][g]=v>=0?m.get(v):0}}var C=0;for(g=0;g<e.length;g++)C+=e[g].totalCount;var p=new Array(C),w=0;for(g=0;g<o;g++)for(l=0;l<e.length;l++)g<u[l].length&&(p[w++]=u[l][g]);for(g=0;g<i;g++)for(l=0;l<e.length;l++)g<s[l].length&&(p[w++]=s[l][g]);return p};for(var e={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8},n=function(t,e){if(void 0==t.length)throw new Error(t.length+"/"+e);for(var n=0;n<t.length&&0==t[n];)n++;this.num=new Array(t.length-n+e);for(var r=0;r<t.length-n;r++)this.num[r]=t[r+n]},r=(n.prototype={get:function(t){return this.num[t]},getLength:function(){return this.num.length},multiply:function(t){for(var e=new Array(this.getLength()+t.getLength()-1),r=0;r<this.getLength();r++)for(var o=0;o<t.getLength();o++)e[r+o]^=i.gexp(i.glog(this.get(r))+i.glog(t.get(o)));return new n(e,0)},mod:function(t){if(this.getLength()-t.getLength()<0)return this;for(var e=i.glog(this.get(0))-i.glog(t.get(0)),r=new Array(this.getLength()),o=0;o<this.getLength();o++)r[o]=this.get(o);for(o=0;o<t.getLength();o++)r[o]^=i.gexp(i.glog(t.get(o))+e);return new n(r,0).mod(t)}},function(t,e){this.totalCount=t,this.dataCount=e}),o=function(){var t=[[1,26,19],[1,26,16],[1,26,13],[1,26,9],[1,44,34],[1,44,28],[1,44,22],[1,44,16],[1,70,55],[1,70,44],[2,35,17],[2,35,13],[1,100,80],[2,50,32],[2,50,24],[4,25,9],[1,134,108],[2,67,43],[2,33,15,2,34,16],[2,33,11,2,34,12],[2,86,68],[4,43,27],[4,43,19],[4,43,15],[2,98,78],[4,49,31],[2,32,14,4,33,15],[4,39,13,1,40,14],[2,121,97],[2,60,38,2,61,39],[4,40,18,2,41,19],[4,40,14,2,41,15],[2,146,116],[3,58,36,2,59,37],[4,36,16,4,37,17],[4,36,12,4,37,13],[2,86,68,2,87,69],[4,69,43,1,70,44],[6,43,19,2,44,20],[6,43,15,2,44,16],[4,101,81],[1,80,50,4,81,51],[4,50,22,4,51,23],[3,36,12,8,37,13],[2,116,92,2,117,93],[6,58,36,2,59,37],[4,46,20,6,47,21],[7,42,14,4,43,15],[4,133,107],[8,59,37,1,60,38],[8,44,20,4,45,21],[12,33,11,4,34,12],[3,145,115,1,146,116],[4,64,40,5,65,41],[11,36,16,5,37,17],[11,36,12,5,37,13],[5,109,87,1,110,88],[5,65,41,5,66,42],[5,54,24,7,55,25],[11,36,12],[5,122,98,1,123,99],[7,73,45,3,74,46],[15,43,19,2,44,20],[3,45,15,13,46,16],[1,135,107,5,136,108],[10,74,46,1,75,47],[1,50,22,15,51,23],[2,42,14,17,43,15],[5,150,120,1,151,121],[9,69,43,4,70,44],[17,50,22,1,51,23],[2,42,14,19,43,15],[3,141,113,4,142,114],[3,70,44,11,71,45],[17,47,21,4,48,22],[9,39,13,16,40,14],[3,135,107,5,136,108],[3,67,41,13,68,42],[15,54,24,5,55,25],[15,43,15,10,44,16],[4,144,116,4,145,117],[17,68,42],[17,50,22,6,51,23],[19,46,16,6,47,17],[2,139,111,7,140,112],[17,74,46],[7,54,24,16,55,25],[34,37,13],[4,151,121,5,152,122],[4,75,47,14,76,48],[11,54,24,14,55,25],[16,45,15,14,46,16],[6,147,117,4,148,118],[6,73,45,14,74,46],[11,54,24,16,55,25],[30,46,16,2,47,17],[8,132,106,4,133,107],[8,75,47,13,76,48],[7,54,24,22,55,25],[22,45,15,13,46,16],[10,142,114,2,143,115],[19,74,46,4,75,47],[28,50,22,6,51,23],[33,46,16,4,47,17],[8,152,122,4,153,123],[22,73,45,3,74,46],[8,53,23,26,54,24],[12,45,15,28,46,16],[3,147,117,10,148,118],[3,73,45,23,74,46],[4,54,24,31,55,25],[11,45,15,31,46,16],[7,146,116,7,147,117],[21,73,45,7,74,46],[1,53,23,37,54,24],[19,45,15,26,46,16],[5,145,115,10,146,116],[19,75,47,10,76,48],[15,54,24,25,55,25],[23,45,15,25,46,16],[13,145,115,3,146,116],[2,74,46,29,75,47],[42,54,24,1,55,25],[23,45,15,28,46,16],[17,145,115],[10,74,46,23,75,47],[10,54,24,35,55,25],[19,45,15,35,46,16],[17,145,115,1,146,116],[14,74,46,21,75,47],[29,54,24,19,55,25],[11,45,15,46,46,16],[13,145,115,6,146,116],[14,74,46,23,75,47],[44,54,24,7,55,25],[59,46,16,1,47,17],[12,151,121,7,152,122],[12,75,47,26,76,48],[39,54,24,14,55,25],[22,45,15,41,46,16],[6,151,121,14,152,122],[6,75,47,34,76,48],[46,54,24,10,55,25],[2,45,15,64,46,16],[17,152,122,4,153,123],[29,74,46,14,75,47],[49,54,24,10,55,25],[24,45,15,46,46,16],[4,152,122,18,153,123],[13,74,46,32,75,47],[48,54,24,14,55,25],[42,45,15,32,46,16],[20,147,117,4,148,118],[40,75,47,7,76,48],[43,54,24,22,55,25],[10,45,15,67,46,16],[19,148,118,6,149,119],[18,75,47,31,76,48],[34,54,24,34,55,25],[20,45,15,61,46,16]],e={};return e.getRSBlocks=function(e,n){var r=o[4*(e-1)+n];if(void 0==r)throw new Error("bad rs block @ typeNumber:"+e+"/errorCorrectLevel:"+n);for(var i=r.length/3,a=new Array,u=0;u<i;u++)for(var s=r[3*u+0],l=r[3*u+1],c=r[3*u+2],h=0;h<s;h++)a.push(new this(l,c));return a},e}(),i=function(){for(var t=new Array(256),e=new Array(256),n=0;n<8;n++)t[n]=1<<n;for(n=8;n<256;n++)t[n]=t[n-4]^t[n-5]^t[n-6]^t[n-8];for(n=0;n<255;n++)e[t[n]]=n;var r={};return r.glog=function(t){if(t<1)throw new Error("glog("+t+")");return e[t]},r.gexp=function(e){for(;e<0;)e+=255;for(;e>=256;)e-=255;return t[e]},r}();function a(t,e){this.mode=t,this.data=e}a.prototype={getLength:function(){return this.data.length},write:function(t){for(var e=0;e<this.data.length;e++)t.put(this.data.charCodeAt(e),8)}};var u=function(){var t=new Array,e={};return e.writeByte=function(e){t.push(255&e)},e.writeShort=function(t){e.writeByte(t),e.writeByte(t>>>8)},e.writeBytes=function(e,n,r){n=n||0,r=r||e.length;for(var o=0;o<r;o++)this.writeByte(e[o+n])},e.writeString=function(t){for(var n=0;n<t.length;n++)e.writeByte(t.charCodeAt(n))},e.toByteArray=function(){return t},e.toString=function(){var e="";e+="[";for(var n=0;n<t.length;n++)n>0&&(e+=","),e+=t[n];return e+="]"},e}();!function(){var t={toCanvas:function(t,e,n,r,o){var i=arguments.length<2?t:e,a=document.createElement("canvas");a.width=i,a.height=i;for(var u=a.getContext("2d"),s=n/i,l=0;l<i;l++)for(var c=0;c<i;c++){var h=Math.floor(c*s),f=Math.floor(l*s),g=r.isDark(f,h)?o:255;u.fillStyle="rgb("+g+","+g+","+g+")",u.fillRect(c,l,1,1)}return a}};void 0!==t&&(t.stringToBytes=function(t){for(var e=[],n=0;n<t.length;n++){var r=t.charCodeAt(n);e.push(255&r)}return e})}();var s={},l={L:1,M:0,Q:3,H:2},c={MODE_NUMBER:1,MODE_ALPHA_NUM:2,MODE_8BIT_BYTE:4,MODE_KANJI:8};function h(t,e){this.errorCorrectLevel=e,this.qrcode=new (s.QRCode||function(t,e){this.typeNumber=-1,this.errorCorrectLevel=e,this.modules=null,this.moduleCount=0,this.dataCache=null,this.rsBlocks=null,this.totalDataCount=-1,this.data=t,this.utf8bytes=function(){try{return decodeURIComponent(encodeURIComponent(t)).split("").map((function(t){return t.charCodeAt(0)}))}catch(t){return[]}}(),this.make()})(t,e)}return h.prototype.getModuleCount=function(){return this.qrcode.moduleCount},h.prototype.make=function(){this.qrcode.make()},h.prototype.isDark=function(t,e){return this.qrcode.isDark(t,e)},h.prototype.createTableTag=function(t,e){t=t||2;var n="";n+='<table style="',n+=" border-width: 0px; border-style: none;",n+=" border-collapse: collapse;",n+=" padding: 0px; margin: "+e+"px;",n+='">';for(var r=0;r<this.qrcode.moduleCount;r++){n+="<tr>";for(var o=0;o<this.qrcode.moduleCount;o++)n+='<td style="',n+=" border-width: 0px; border-style: none;",n+=" border-collapse: collapse;",n+=" padding: 0px; margin: 0px;",n+=" width: "+t+"px;",n+=" height: "+t+"px;",n+=" background-color: ",n+=this.qrcode.isDark(r,o)?"#000000":"#ffffff",n+=";",n+='"/>';n+="</tr>"}return n+="</table>"},h.prototype.createImgTag=function(t,e){t=t||2,e=void 0===e?4*t:e;var n=this.qrcode.moduleCount*t+2*e,r=e,o=n-e;return f(n,n,(function(e,n){if(r<=e&&e<o&&r<=n&&n<o){var i=Math.floor((e-r)/t),a=Math.floor((n-r)/t);return this.qrcode.isDark(a,i)?0:1}return 1}))},h}();function f(t,e,n){var r,o,i=(r=t,o=e,{width:r,height:o,data:new Array(r*e)}),a=n;i.data.fill(1);for(var u=0;u<t;u++)for(var s=0;s<e;s++){var l=a(u,s);i.data[s*t+u]=l}var c=[];c.push({x:0,y:0,w:t,h:e,data:i.data});var h="M"+c.map((function(e){for(var n=e.x,r=e.y,o="",i=0,a=!1,u=0;u<e.h;u++){i=r+u;for(var s=0;s<e.w;s++){var l=n+s,c=e.data[u*t+s];c||a?c||!a||(o+=" M"+i+" "+l+"v1h"+s+"v-1z",s=0,a=!1):a=!0}a&&(o+=" M"+i+" "+n+"v1h"+e.w+"v-1z",a=!1,s=0)}return o})).join("");return'<svg xmlns="http://www.w3.org/2000/svg" width="'+t+'" height="'+e+'"><path d="'+h+'" fill="#000"/></svg>'}
+    
+    // Gerar QR Code
+    const url = 'http://192.168.68.106:8000';
+    document.getElementById('url-display').textContent = url;
+    
+    const qr = new QRCode(url, 'M');
+    const canvas = document.getElementById('qrcode');
+    const size = 256;
+    
+    canvas.width = size;
+    canvas.height = size;
+    
+    const ctx = canvas.getContext('2d');
+    const moduleCount = qr.getModuleCount();
+    const cellSize = size / moduleCount;
+    
+    for (let row = 0; row < moduleCount; row++) {
+      for (let col = 0; col < moduleCount; col++) {
+        ctx.fillStyle = qr.isDark(row, col) ? '#000' : '#fff';
+        ctx.fillRect(col * cellSize, row * cellSize, cellSize, cellSize);
+      }
+    }
+    
+    console.log('QR Code gerado para:', url);
+  </script>
+</body>
+</html>
+
