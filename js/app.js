@@ -110,44 +110,62 @@ function bindMapInteractions(svgRoot, dataset, countryPrefix) {
 function openState(elementId, dataset){
   // elementId ex: "br-SP"
   const code = elementId.split('-')[1]?.toUpperCase();
-  const data = dataset[code] || { name: code, intro: "Em breve adicionaremos os detalhes deste estado." };
+  const data = dataset[code] || { name: code, alfabetizacao: "Dados não disponíveis" };
 
-  // Dados adicionais (taxa, faixa, renda)
-  let details = "";
-  if (data.taxa || data.faixa || data.renda) {
-    details = `<div style="display:grid;gap:8px;margin-top:8px;padding:12px;background:var(--soft);border-radius:8px">
-      ${data.taxa  ? `<div><strong>Taxa:</strong> ${data.taxa}</div>` : ""}
-      ${data.faixa ? `<div><strong>Faixa etária:</strong> ${data.faixa}</div>` : ""}
-      ${data.renda ? `<div><strong>Renda média:</strong> ${data.renda}</div>` : ""}
-    </div>`;
+  // Se não tem dados completos (estrutura antiga), exibe mensagem simples
+  if (!data.populacao) {
+    const html = `<p>${data.intro || "Em breve adicionaremos os detalhes deste estado."}</p>`;
+    Modal.show(data.name || code, html);
+    return;
   }
-  
-  const html = `
-    <p><strong>Sigla:</strong> ${code}</p>
-    ${data.intro ? `<p>${data.intro}</p>` : ''}
-    ${details}
-    ${data.totalSamples ? `
-      <div class="data-grid" style="margin-top: 16px;">
-        <div class="data-item">
-          <span class="label">Total de Amostras</span>
-          <span class="value">${data.totalSamples}</span>
-        </div>
-        <div class="data-item">
-          <span class="label">Amostras Analisadas</span>
-          <span class="value">${data.analyzedSamples}</span>
-        </div>
-        <div class="data-item">
-          <span class="label">Pendentes</span>
-          <span class="value">${data.pendingSamples}</span>
-        </div>
-        <div class="data-item">
-          <span class="label">Última Atualização</span>
-          <span class="value">${data.lastUpdate}</span>
-        </div>
-      </div>
-    ` : ''}
-    ${data.extra ? `<div style="margin-top:10px">${data.extra}</div>` : ''}
+
+  // Card principal - Taxa de Alfabetização com destaque visual
+  const taxaCard = `
+    <div class="alfabetizacao-destaque">
+      <div class="taxa-principal">${data.alfabetizacao}</div>
+      <div class="taxa-label">Taxa de Alfabetização (15+)</div>
+    </div>
   `;
+  
+  // Grid de informações 2x2 com ícones
+  const infoGrid = `
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-icon">👥</span>
+        <span class="info-label">População</span>
+        <span class="info-value">${data.populacao}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">💰</span>
+        <span class="info-label">Renda per capita</span>
+        <span class="info-value">${data.renda}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">📊</span>
+        <span class="info-label">IDH (2021)</span>
+        <span class="info-value">${data.idh}</span>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">📈</span>
+        <span class="info-label">Evolução 2010-2022</span>
+        <span class="info-value">${data.variacao}</span>
+      </div>
+    </div>
+  `;
+  
+  // Barra comparativa com média nacional (colorida)
+  const comparativoClass = data.comparativoValor >= 0 ? 'positivo' : 'negativo';
+  const comparativoIcon = data.comparativoValor > 0 ? '▲' : data.comparativoValor < 0 ? '▼' : '●';
+  const comparativo = `
+    <div class="comparativo-nacional">
+      <div class="comparativo-label">Comparativo com média nacional</div>
+      <div class="comparativo-valor ${comparativoClass}">
+        ${comparativoIcon} ${data.comparativo}
+      </div>
+    </div>
+  `;
+  
+  const html = taxaCard + infoGrid + comparativo;
   Modal.show(data.name || code, html);
 }
 
