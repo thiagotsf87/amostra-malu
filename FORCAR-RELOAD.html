@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forçar Atualização - Limpar Cache</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 { margin-top: 0; font-size: 2rem; }
+        .btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); }
+        .info {
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .info h3 { margin-top: 0; }
+        .info ol { margin: 10px 0; padding-left: 20px; }
+        code {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🔄 Forçar Atualização</h1>
+        <p>Use os botões abaixo para limpar o cache e ver as mudanças:</p>
+        
+        <button class="btn" onclick="abrirBrasil()">🇧🇷 Abrir Brasil (Limpo)</button>
+        <button class="btn" onclick="abrirEUA()">🇺🇸 Abrir EUA (Limpo)</button>
+        
+        <div class="info">
+            <h3>⚙️ Opção Manual - Chrome:</h3>
+            <ol>
+                <li>Pressione <code>F12</code> (DevTools)</li>
+                <li>Vá em <strong>Application</strong> (ou Aplicação)</li>
+                <li>Menu lateral → <strong>Storage</strong></li>
+                <li>Clique <strong>Clear site data</strong></li>
+                <li>Recarregue a página (<code>F5</code>)</li>
+            </ol>
+        </div>
+        
+        <div class="info">
+            <h3>⌨️ Atalhos Rápidos:</h3>
+            <ul style="list-style: none; padding: 0;">
+                <li>🔹 <code>Ctrl + Shift + R</code> - Hard Refresh</li>
+                <li>🔹 <code>Ctrl + Shift + Delete</code> - Limpar Cache</li>
+                <li>🔹 <code>Ctrl + Shift + N</code> - Aba Anônima</li>
+            </ul>
+        </div>
+        
+        <div class="info">
+            <h3>✅ O que deve aparecer:</h3>
+            <p><strong>EUA:</strong> "Taxa de Proficiência (16-74)" + "Nível Educacional (% com Ensino Superior)" 🎓</p>
+            <p><strong>Brasil:</strong> "Taxa de Alfabetização (15+)" + "Evolução 2010-2022" 📈</p>
+            <p><strong>Comparativo:</strong> "Comparativo com média nacional (46,9%)" ou "(93,0%)"</p>
+        </div>
+    </div>
+    
+    <script>
+        function abrirBrasil() {
+            // Adiciona timestamp para forçar reload
+            const url = './brasil.html?v=' + new Date().getTime();
+            window.open(url, '_blank');
+        }
+        
+        function abrirEUA() {
+            // Adiciona timestamp para forçar reload
+            const url = './usa.html?v=' + new Date().getTime();
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+</html>
+

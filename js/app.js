@@ -108,9 +108,23 @@ function bindMapInteractions(svgRoot, dataset, countryPrefix) {
 
 // Abre o modal com dados do estado
 function openState(elementId, dataset){
-  // elementId ex: "br-SP"
+  // elementId ex: "br-SP" ou "usa-TX"
+  const prefix = elementId.split('-')[0]; // 'br' ou 'usa'
   const code = elementId.split('-')[1]?.toUpperCase();
   const data = dataset[code] || { name: code, alfabetizacao: "Dados não disponíveis" };
+
+  // Detecta país para labels corretos
+  const isBrazil = (prefix === 'br');
+  const isUSA = (prefix === 'us' || prefix === 'usa');
+  
+  // Labels específicos por país
+  const labels = {
+    taxaTitulo: isBrazil ? 'Taxa de Alfabetização' : isUSA ? 'Taxa de Proficiência' : 'Taxa',
+    faixaEtaria: isBrazil ? '(15+)' : isUSA ? '(16-74)' : '',
+    moeda: isBrazil ? 'R$' : isUSA ? 'US$' : '',
+    evolucaoLabel: isBrazil ? 'Evolução 2010-2022' : isUSA ? 'Nível Educacional (% com Ensino Superior)' : 'Evolução',
+    evolucaoIcon: isBrazil ? '📈' : isUSA ? '🎓' : '📈'
+  };
 
   // Se não tem dados completos (estrutura antiga), exibe mensagem simples
   if (!data.populacao) {
@@ -119,11 +133,11 @@ function openState(elementId, dataset){
     return;
   }
 
-  // Card principal - Taxa de Alfabetização com destaque visual
+  // Card principal - Taxa de Alfabetização/Proficiência com destaque visual
   const taxaCard = `
     <div class="alfabetizacao-destaque">
       <div class="taxa-principal">${data.alfabetizacao}</div>
-      <div class="taxa-label">Taxa de Alfabetização (15+)</div>
+      <div class="taxa-label">${labels.taxaTitulo} ${labels.faixaEtaria}</div>
     </div>
   `;
   
@@ -146,9 +160,9 @@ function openState(elementId, dataset){
         <span class="info-value">${data.idh}</span>
       </div>
       <div class="info-item">
-        <span class="info-icon">📈</span>
-        <span class="info-label">Evolução 2010-2022</span>
-        <span class="info-value">${data.variacao}</span>
+        <span class="info-icon">${labels.evolucaoIcon}</span>
+        <span class="info-label">${labels.evolucaoLabel}</span>
+        <span class="info-value">${isUSA ? data.nivelEducacional : data.variacao}</span>
       </div>
     </div>
   `;
@@ -156,9 +170,13 @@ function openState(elementId, dataset){
   // Barra comparativa com média nacional (colorida)
   const comparativoClass = data.comparativoValor >= 0 ? 'positivo' : 'negativo';
   const comparativoIcon = data.comparativoValor > 0 ? '▲' : data.comparativoValor < 0 ? '▼' : '●';
+  
+  // Média nacional por país
+  const mediaNacional = isBrazil ? '93,0%' : isUSA ? '46,9%' : '-';
+  
   const comparativo = `
     <div class="comparativo-nacional">
-      <div class="comparativo-label">Comparativo com média nacional</div>
+      <div class="comparativo-label">Comparativo com média nacional (${mediaNacional})</div>
       <div class="comparativo-valor ${comparativoClass}">
         ${comparativoIcon} ${data.comparativo}
       </div>
