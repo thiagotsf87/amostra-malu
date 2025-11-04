@@ -9,8 +9,12 @@ const Modal = (() => {
     if (backdrop) return;
     backdrop = document.createElement('div');
     backdrop.className = 'modal-backdrop';
+    
+    // ISOLA O MODAL COMPLETAMENTE - Não herda zoom/transform do pai
+    backdrop.style.cssText = 'position: fixed !important; inset: 0 !important; transform: none !important; zoom: 1 !important; scale: 1 !important; width: 100vw !important; height: 100vh !important; top: 0 !important; left: 0 !important;';
+    
     backdrop.innerHTML = `
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="transform: none !important; zoom: 1 !important; scale: 1 !important; font-size: 16px !important;">
         <div class="modal-header">
           <h3 id="modal-title" class="modal-title">Título</h3>
           <button class="modal-close" aria-label="Fechar (Esc)">Fechar ✕</button>
