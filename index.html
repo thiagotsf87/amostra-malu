@@ -9,8 +9,11 @@
 <body>
   <div class="container">
     <header class="header">
-      <h1>Alfabetização Brasil X Estados Unidos</h1>
-      <small>Comparando alfabetização e proficiência em dois continentes</small>
+      <div>
+        <h1>Alfabetização Brasil X Estados Unidos</h1>
+        <small>Comparando alfabetização e proficiência em dois continentes</small>
+      </div>
+      <a href="./admin-ratings.html" class="admin-link" title="Painel de Avaliações" aria-label="Acessar painel de avaliações">📊</a>
     </header>
 
     <section class="card full">
@@ -75,6 +78,29 @@
         </div>
       </div>
       
+      <!-- Seção de Avaliação -->
+      <div class="rating-section">
+        <h2>Deixe sua Avaliação</h2>
+        <form id="rating-form" class="rating-form">
+          <div id="star-rating" class="star-rating-container" role="group" aria-label="Avaliação de 1 a 5 estrelas">
+            <!-- Estrelas serão inseridas aqui via JavaScript -->
+          </div>
+          
+          <textarea 
+            id="rating-comment" 
+            class="rating-comment-field"
+            placeholder="Deixe um comentário (opcional)..."
+            aria-label="Comentário da avaliação"
+          ></textarea>
+          
+          <button type="submit" id="rating-submit" class="rating-submit-btn">
+            Enviar Avaliação
+          </button>
+          
+          <div id="rating-message" class="rating-message" style="display: none;"></div>
+        </form>
+      </div>
+      
       <p class="notice footer-hint" style="margin-top: 30px; text-align: center;">
         💡 Clique em um card para visualizar o mapa interativo
       </p>
@@ -82,6 +108,7 @@
 
   </div>
   <script src="./js/app.js?v=20250103-012"></script>
+  <script src="./js/ratings.js"></script>
   <script>window._amostra.bindFlagLinks();</script>
 </body>
 </html>

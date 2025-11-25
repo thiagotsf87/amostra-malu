@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin - Avaliações | Amostra Cultural</title>
+  <link rel="stylesheet" href="./css/styles.css?v=20250103-013">
+  <style>
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: var(--card);
+      border: 1px solid #263143;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .stat-card-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--brand);
+      margin-bottom: 5px;
+    }
+    
+    .stat-card-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    .ratings-list {
+      background: var(--card);
+      border: 1px solid #263143;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    
+    .rating-item {
+      padding: 20px;
+      border-bottom: 1px solid #263143;
+      margin-bottom: 15px;
+    }
+    
+    .rating-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    
+    .rating-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .rating-stars {
+      font-size: 1.5rem;
+      color: #ffd700;
+    }
+    
+    .rating-date {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    .rating-comment {
+      margin-top: 10px;
+      padding: 15px;
+      background: var(--soft);
+      border-radius: 8px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    .rating-comment.empty {
+      color: var(--muted);
+      font-style: italic;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .btn-export {
+      background: var(--brand-2);
+      color: #0f172a;
+    }
+    
+    .btn-clear {
+      background: var(--danger);
+      color: white;
+    }
+    
+    .btn-refresh {
+      background: var(--soft);
+      color: var(--text);
+      border: 1px solid #263143;
+    }
+    
+    .distribution-bar {
+      display: flex;
+      gap: 5px;
+      margin-top: 10px;
+    }
+    
+    .distribution-item {
+      flex: 1;
+      text-align: center;
+      padding: 10px;
+      background: var(--soft);
+      border-radius: 6px;
+    }
+    
+    .distribution-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--brand);
+    }
+    
+    .distribution-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div>
+        <h1>Painel de Avaliações</h1>
+        <small>Visualize todas as avaliações recebidas</small>
+      </div>
+      <a href="./index.html" class="back-link">← Voltar</a>
+    </header>
+
+    <div class="admin-header">
+      <div class="btn-group">
+        <button id="btn-refresh" class="btn btn-refresh">🔄 Atualizar</button>
+        <button id="btn-export" class="btn btn-export">📥 Exportar JSON</button>
+        <button id="btn-clear" class="btn btn-clear">🗑️ Limpar Local</button>
+      </div>
+    </div>
+
+    <div id="stats-container" class="stats-grid">
+      <!-- Estatísticas serão inseridas aqui -->
+    </div>
+
+    <div id="ratings-container" class="ratings-list">
+      <!-- Lista de avaliações será inserida aqui -->
+    </div>
+  </div>
+
+  <script src="./js/ratings.js"></script>
+  <script>
+    // Função para formatar data
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Função para renderizar estrelas
+    function renderStars(rating) {
+      return '⭐'.repeat(rating) + '☆'.repeat(5 - rating);
+    }
+
+    // Função para renderizar estatísticas
+    function renderStats() {
+      const stats = window.RatingsManager.getStats();
+      const container = document.getElementById('stats-container');
+      
+      container.innerHTML = `
+        <div class="stat-card">
+          <div class="stat-card-value">${stats.total}</div>
+          <div class="stat-card-label">Total de Avaliações</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-value">${stats.average || 0}</div>
+          <div class="stat-card-label">Média de Notas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-value">${stats.distribution[5] || 0}</div>
+          <div class="stat-card-label">5 Estrelas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-value">${stats.distribution[4] || 0}</div>
+          <div class="stat-card-label">4 Estrelas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-value">${stats.distribution[3] || 0}</div>
+          <div class="stat-card-label">3 Estrelas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-value">${stats.distribution[2] || 0}</div>
+          <div class="stat-card-label">2 Estrelas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-value">${stats.distribution[1] || 0}</div>
+          <div class="stat-card-label">1 Estrela</div>
+        </div>
+      `;
+    }
+
+    // Função para renderizar lista de avaliações
+    function renderRatings() {
+      const ratings = window.RatingsManager.getAllFromLocal();
+      const container = document.getElementById('ratings-container');
+      
+      if (ratings.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">📭</div>
+            <h2>Nenhuma avaliação ainda</h2>
+            <p>As avaliações aparecerão aqui quando forem enviadas.</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Ordena por data (mais recente primeiro)
+      const sortedRatings = [...ratings].sort((a, b) => b.timestamp - a.timestamp);
+
+      container.innerHTML = sortedRatings.map(rating => `
+        <div class="rating-item">
+          <div class="rating-header">
+            <div class="rating-stars">${renderStars(rating.rating)}</div>
+            <div class="rating-date">${formatDate(rating.date)}</div>
+          </div>
+          ${rating.comment ? `
+            <div class="rating-comment">${rating.comment}</div>
+          ` : `
+            <div class="rating-comment empty">(sem comentário)</div>
+          `}
+        </div>
+      `).join('');
+    }
+
+    // Função para exportar JSON
+    function exportJSON() {
+      const ratings = window.RatingsManager.getAllFromLocal();
+      const stats = window.RatingsManager.getStats();
+      
+      const data = {
+        exportDate: new Date().toISOString(),
+        total: ratings.length,
+        average: stats.average,
+        ratings: ratings
+      };
+
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `avaliacoes-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Função para limpar avaliações locais
+    function clearLocal() {
+      if (confirm('Tem certeza que deseja limpar todas as avaliações locais? Esta ação não pode ser desfeita.')) {
+        window.RatingsManager.clearLocal();
+        renderStats();
+        renderRatings();
+        alert('Avaliações locais limpas com sucesso!');
+      }
+    }
+
+    // Event listeners
+    document.getElementById('btn-refresh').addEventListener('click', () => {
+      renderStats();
+      renderRatings();
+    });
+
+    document.getElementById('btn-export').addEventListener('click', exportJSON);
+    document.getElementById('btn-clear').addEventListener('click', clearLocal);
+
+    // Inicialização
+    renderStats();
+    renderRatings();
+  </script>
+</body>
+</html>
+
